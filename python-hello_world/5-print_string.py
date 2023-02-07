@@ -1,4 +1,4 @@
 #!/usr/bin/python3
-str = "Textbook Tech"
-print("{}{}{}".format(str, str, str))
-print("{}".format(str[:9]))
+str = "Holberton School"
+print(3 * str)
+print(str[:9])
