@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/usr/bin/python3
 word = "Expertise"
 word_first_3 = word[:3]
 word_last_2 = word[-2:]
