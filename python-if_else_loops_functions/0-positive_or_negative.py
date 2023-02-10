@@ -1,4 +1,9 @@
 #!/usr/bin/python3
-for a in "abcdefghijklmnopqrstuvwxyz":
-if(a not in "qe"):
-       print("{}".format(a), end='')
+import random
+number = random.randint(-10, 10)
+if number > 0:
+        print(f"{number} is positive")
+elif number == 0:
+        print(f"{number} is zero")
+else:
+        print(f"{number} is negative")
