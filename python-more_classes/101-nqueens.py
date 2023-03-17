@@ -1,50 +1,45 @@
 #!/usr/bin/python3
+
 """
-N queens puzzle is the challenge of placing N non-attacking queens on an N×N chessboard.
+This module contains a function to solve the N-queens problem.
 """
 
-import sys
+def check_two_queens(position1, position2):
+    """
+    This function checks if two queens placed at position1 and position2 are
+    attacking each other.
+    """
+    if position1[0] == position2[0] or position1[1] == position2[1]:
+        return True
+    if abs(position1[0] - position2[0]) == abs(position1[1] - position2[1]):
+        return True
+    return False
 
+def n_queens(n):
+    """
+    This function solves the N-queens problem.
+    """
+    if not isinstance(n, int):
+        return None
+    if n < 4:
+        return None
 
-def is_safe_pos(possibilty, col):
-    """Check if it is possible to put the queen"""
-    for i in range(col):
-        if possibilty[i] == possibilty[col] or abs(possibilty[i] - possibilty[col]) == col - i:
-            return False
-    return True
+    possibilty = [[i, j] for i in range(n) for j in range(n) if i < j]
 
+    if not possibilty:
+        return None
 
-def nqueens(possibilty, col, n):
-    """Recursive function to place queens on the chess board"""
+    i = 0
     count = 0
-    if col == n:
-        return 1
-    for i in range(n):
-        possibilty[col] = i
-        if is_safe_pos(possibilty, col):
-            count += nqueens(possibilty, col + 1, n)
+
+    while i < len(possibilty) - 1:
+        j = i + 1
+        while j < len(possibilty):
+            if not check_two_queens(possibilty[i], possibilty[j]):
+                count += 1
+            j += 1
+        i += 1
+
     return count
 
-
-if __name__ == "__main__":
-    # Verify the input
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-    try:
-        n = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-
-    # Initialize an array to hold positions of queens
-    possibilty = [0 for i in range(n)]
-
-    # Calculate the number of possible solutions
-    count = nqueens(possibilty, 0, n)
-
-    # Print the number of solutions
-    print(count)
+print(n_queens(2))
