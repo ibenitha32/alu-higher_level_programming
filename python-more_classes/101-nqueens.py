@@ -46,19 +46,7 @@ N = int(N)
 if N < 4:
     print("N must be at least 4")
     sys.exit(1)
-    
-if N < 5:
-    print("N must be at least 5")
-    sys.exit(1)    
-    
-if N < 8:
-    print("N must be at least 8")
-    sys.exit(1)
-    
-if N < 10:
-    print("N must be at least 10")
-    sys.exit(1)
-    
+
 queen = 0
 
 while queen != N:
