@@ -1,10 +1,13 @@
 #!/usr/bin/python3
 
+
 import sys
+
 
 def printBoard(board):
     if any(1 in x for x in board):
         print([[idx, board[idx].index(1)] for idx, val in enumerate(board)])
+
 
 def isSafe(row, square, chessboard, N, diag):
     if chessboard[row][square]:
@@ -16,6 +19,7 @@ def isSafe(row, square, chessboard, N, diag):
     if row == 0:
         return True
     return isSafe(row - 1, square, chessboard, N, diag + 1)
+
 
 def placeSquare(row, position, chessboard, N):
     for square in range(position, N):
@@ -44,7 +48,6 @@ if N < 4:
     sys.exit(1)
 
 queen = 0
-solutions = 0
 
 while queen != N:
     chessboard = [[0 for x in range(N)] for x in range(N)]
@@ -62,8 +65,5 @@ while queen != N:
         else:
             row += 1
             position = 0
-    if row == N:
-        solutions += 1
+    printBoard(chessboard)
     queen += 1
-
-print(solutions)
