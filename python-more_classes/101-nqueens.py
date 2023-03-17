@@ -1,45 +1,69 @@
 #!/usr/bin/python3
 
-"""
-This module contains a function to solve the N-queens problem.
-"""
 
-def check_two_queens(position1, position2):
-    """
-    This function checks if two queens placed at position1 and position2 are
-    attacking each other.
-    """
-    if position1[0] == position2[0] or position1[1] == position2[1]:
+import sys
+
+
+def printBoard(board):
+    if any(1 in x for x in board):
+        print([[idx, board[idx].index(1)] for idx, val in enumerate(board)])
+
+
+def isSafe(row, square, chessboard, N, diag):
+    if chessboard[row][square]:
+        return False
+    if square - diag >= 0 and chessboard[row][square - diag]:
+        return False
+    if square + diag < (N) and chessboard[row][square + diag]:
+        return False
+    if row == 0:
         return True
-    if abs(position1[0] - position2[0]) == abs(position1[1] - position2[1]):
-        return True
-    return False
+    return isSafe(row - 1, square, chessboard, N, diag + 1)
 
-def n_queens(n):
-    """
-    This function solves the N-queens problem.
-    """
-    if not isinstance(n, int):
-        return None
-    if n < 4:
-        return None
 
-    possibilty = [[i, j] for i in range(n) for j in range(n) if i < j]
+def placeSquare(row, position, chessboard, N):
+    for square in range(position, N):
+        if 1 in chessboard[row]:
+            return 0
+        if not isSafe(row - 1, square, chessboard, N, 1):
+            continue
+        chessboard[row][square] = 1
+        return
+    return 1
 
-    if not possibilty:
-        return None
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    sys.exit(1)
 
-    i = 0
-    count = 0
+N = sys.argv[1]
 
-    while i < len(possibilty) - 1:
-        j = i + 1
-        while j < len(possibilty):
-            if not check_two_queens(possibilty[i], possibilty[j]):
-                count += 1
-            j += 1
-        i += 1
+if not str.isdigit(N):
+    print("N must be a number")
+    sys.exit(1)
 
-    return count
+N = int(N)
 
-print(n_queens(2))
+if N < 4:
+    print("N must be at least 4")
+    sys.exit(1)
+
+queen = 0
+
+while queen != N:
+    chessboard = [[0 for x in range(N)] for x in range(N)]
+    chessboard[0][queen] = 1
+    position = 0
+    row = 1
+    while row < N:
+        if placeSquare(row, position, chessboard, N):
+            row -= 1
+            position = chessboard[row].index(1)
+            chessboard[row][position] = 0
+            position += 1
+            if not row:
+                break
+        else:
+            row += 1
+            position = 0
+    printBoard(chessboard)
+    queen += 1
