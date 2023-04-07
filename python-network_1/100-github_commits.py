@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Writes a Python script that displays the 10 most recent commits of a GitHub repository.
+"""lists the 10 most recent commits on a GitHub repository.
 """
 import sys
 import requests
