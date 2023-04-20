@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-    A script that lists all State objects from the database hbtn_0e_6_usa
-"""
+""" lists all State objects from the database """
 
 
 import sys
@@ -23,6 +21,6 @@ if __name__ == "__main__":
     states = session.query(State).order_by(State.id).all()
 
     for state in states:
-        print(f"{state.id}: {state.name}")
+        print("{}: {}".format(state.id, state.name))
 
     session.close()
