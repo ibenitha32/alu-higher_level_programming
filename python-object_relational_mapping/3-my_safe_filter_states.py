@@ -1,31 +1,23 @@
 #!/usr/bin/python3
-"""
-    script that takes in an argument and displays all
-    values in the states table of hbtn_0e_0_usa
-"""
-
+""" no injections this time! """
 import sys
 import MySQLdb
 
-
 if __name__ == "__main__":
-    conn = MySQLdb.connect(
-        user=sys.argv[1],
-        password=sys.argv[2],
-        db=sys.argv[3],
-        host="localhost",
-        port=3306
-    )
-    cursor = conn.cursor()
-    sql = """ SELECT * FROM states
-        WHERE name = %s
-        ORDER BY id ASC """
-
-    cursor.execute(sql, (sys.argv[4],))
-    data = cursor.fetchall()
-
-    for row in data:
-        print(row)
-
-    cursor.close()
-    conn.close()
+    with MySQLdb.connect(
+            user=sys.argv[1],
+            passwd=sys.argv[2],
+            db=sys.argv[3],
+            host='localhost',
+            port=3306,
+    )as conn:
+        cur = conn.cursor()
+        query = """ SELECT * FROM states
+                    WHERE name = %s
+                    ORDER BY id ASC
+                """
+        cur.execute(query, (sys.argv[4],))
+        names = cur.fetchall()
+        for name in names:
+            print(name)
+        cur.close()
