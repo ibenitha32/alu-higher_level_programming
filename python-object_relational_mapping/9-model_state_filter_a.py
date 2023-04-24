@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""A script that lists all records with letter a"""
-
-
+""" lists all State objects from the database contains a"""
 import sys
 from model_state import Base, State
 from sqlalchemy.orm import sessionmaker
@@ -14,7 +12,6 @@ if __name__ == "__main__":
                         pool_pre_ping=True
                     )
     Session = sessionmaker(bind=engine)
-
     Base.metadata.create_all(engine)
 
     session = Session()
@@ -22,6 +19,6 @@ if __name__ == "__main__":
     states = session.query(State).filter(State.name.contains('a')).all()
 
     for state in states:
-        print(f'{state.id}: {state.name}')
+        print("{}: {}".format(state.id, state.name))
 
     session.close()
